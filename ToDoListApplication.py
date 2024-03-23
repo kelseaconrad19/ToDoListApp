@@ -1,9 +1,13 @@
-from ToDoList import tasks
-#Functions:
+# Functions:
 def view_tasks(task_dic):
     """For each task in the dictionary, print the task and its status"""
     for t in task_dic:
-        print(f"[]: {t}: {task_dic[t]}")
+        if task_dic[t] == "incomplete":
+            print(u"\u001b[31m")
+            print(f"[]: {t}: {task_dic[t]}\u001b[0m")
+        else:
+            print(u"\u001b[32m")
+            print(f"[]: {t}: {task_dic[t]}\u001b[0m")
 
 
 def add_task(task_dict):
@@ -71,21 +75,23 @@ def check_input(user_need, task_dict):
         print("Invalid input. Please try again.")
 
 
-# I am going to need to create a file for the task list. I want the add task function to write to the task file so things that are added to the task list stay after each run.
-
 app_is_on = True
+tasks = {
+}
 # User Interface - Welcome Message and Menu
 print("Welcome to the To-Do List App!")
 while app_is_on:
     menu = "Menu:\n 1. Add a task\n 2. View tasks\n 3. Mark a task complete\n 4. Delete a task\n 5. Quit"
     print(menu)
     # User chooses what they need to do.
-    user_input = input("What do you need to do today?: ").lower()
+    user_input = input("Choose a number from the menu: ").lower()
     # Check if user wants to quit first. If input = 5 or "quit", application should end.
     if user_input == "5" or user_input == "quit":
         app_is_on = False
+    # If the input is not 5 or quit, run the check_input function to complete the desired function.
     else:
         check_input(user_input, tasks)
+        # Ask user if they want to do something else with the application. If yes, go back to the top of the loop and display the menu again. If not, end the application.
         another_task = input("\nDo you need anything else? Y or N: ").lower()
         if another_task == "y":
             app_is_on = True
